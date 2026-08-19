@@ -1,0 +1,5 @@
+package com.lynx.core.events;
+
+import com.lynx.core.factions.Claim; import org.bukkit.entity.Player;
+
+public final class KothEvent { private final String name; private final Claim capzone; private final int startSeconds; private int remainingSeconds; private Player capper; public KothEvent(String name, Claim capzone, int seconds){this.name=name;this.capzone=capzone;this.startSeconds=seconds;this.remainingSeconds=seconds;} public String getName(){return name;} public int getRemainingSeconds(){return remainingSeconds;} public Player getCapper(){return capper;} public void tick(Iterable<Player> players){ Player inside=null; for(Player p:players) if(capzone.contains(p.getLocation())){inside=p;break;} if(inside==null){capper=null;remainingSeconds=startSeconds;return;} if(capper==null||!capper.equals(inside)) capper=inside; remainingSeconds=Math.max(0,remainingSeconds-1);} public boolean isCaptured(){return remainingSeconds<=0;} public void reset(){remainingSeconds=startSeconds;capper=null;} }

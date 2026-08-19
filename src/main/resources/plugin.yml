@@ -1,0 +1,11 @@
+name: LynxCore
+main: com.lynx.core.LynxPlugin
+version: 1.0.0
+author: Lynx
+commands:
+  mod:
+    aliases: [staff, h]
+    description: Toggle Lynx staff mode.
+permissions:
+  lynx.staff:
+    default: op
