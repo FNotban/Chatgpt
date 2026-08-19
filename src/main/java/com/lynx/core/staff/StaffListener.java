@@ -1,0 +1,5 @@
+package com.lynx.core.staff;
+
+import org.bukkit.event.*; import org.bukkit.event.block.BlockBreakEvent; import org.bukkit.event.entity.EntityDamageEvent; import org.bukkit.event.player.*;
+
+public final class StaffListener implements Listener { private final StaffManager staff; public StaffListener(StaffManager staff){this.staff=staff;} @EventHandler public void onMove(PlayerMoveEvent e){ if(staff.isFrozen(e.getPlayer())&&(e.getFrom().getX()!=e.getTo().getX()||e.getFrom().getZ()!=e.getTo().getZ())){ e.setTo(e.getFrom()); e.getPlayer().sendMessage("§cYou are frozen. Join TeamSpeak/Discord immediately."); } } @EventHandler public void onDamage(EntityDamageEvent e){ if(e.getEntity() instanceof org.bukkit.entity.Player && staff.isFrozen((org.bukkit.entity.Player)e.getEntity())) e.setCancelled(true); } @EventHandler public void onBreak(BlockBreakEvent e){ if(staff.isFrozen(e.getPlayer())) e.setCancelled(true); } @EventHandler public void onQuit(PlayerQuitEvent e){ if(staff.isFrozen(e.getPlayer())) org.bukkit.Bukkit.broadcastMessage("§4[AUTOBAN] §c"+e.getPlayer().getName()+" logged out while frozen."); } }
